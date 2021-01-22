@@ -31,6 +31,7 @@ export default {
         width: 100%;
         min-width: 1200px;
         height: 60px;
+        z-index: 10;
         &:hover .nav{
             height: 80px;
             line-height: 60px;
