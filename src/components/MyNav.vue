@@ -30,7 +30,7 @@ export default {
         position: absolute;
         width: 100%;
         min-width: 1200px;
-        height: 60px;
+        height: 80px;
         z-index: 10;
         &:hover .nav{
             height: 80px;

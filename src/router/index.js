@@ -8,4 +8,17 @@ const router = createRouter({
     routes
 })
 
+router.beforeEach((to, from ,next)=>{
+    let token = sessionStorage.getItem('token');
+    if(to.meta.auth){
+        if(token){
+            next();
+        }else{
+            next('/login');
+        }
+    }else{
+        next();
+    }
+})
+
 export default router;

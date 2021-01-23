@@ -8,7 +8,9 @@
       <swiper-font/>
     </div>
     <div class="body">
-      <router-view/>
+      <el-card  shadow="always">
+        <router-view/>
+      </el-card>
     </div>
   </div>
 </template>
@@ -25,7 +27,8 @@ export default {
 
     const navList = reactive([
       { path:'/', label:'首页' },
-      { path:'/about', label:'关于' }
+      { path:'/diarylist', label:'文章' },
+      { path:'/writediary', label:'写文章' }
     ]);
 
     const selectNav = (path)=>{
@@ -61,8 +64,6 @@ export default {
     left: 0;
     right: 0;
     width: 1200px;
-    min-height: 500px;
-    background-color: #fff;
     margin: 0 auto;
     border-radius: 8px;
     box-shadow: 0 0 10px #999;
