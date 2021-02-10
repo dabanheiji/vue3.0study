@@ -10,26 +10,46 @@
             :prop="item.prop"
             :rules="item.rules"
         >
-            <el-input v-model="myParams[item.prop]"></el-input>
+            <el-input 
+                v-if="item.component === 'input'"
+                v-model="myParams[item.prop]"
+                :placeholder="item.placeholder"
+                :show-password="item.showPassword ? true : false"
+                :type="item.type ? item.type : ''"
+            ></el-input>
+            <my-editor
+                v-else-if="item.component === 'editor'"
+                @my-change="myParams[item.prop] = $event"
+            ></my-editor>
         </el-form-item>
-        <div>
+        <div class="clear">
             <el-button
                 type="primary"
                 @click="submitForm"
-            >登录</el-button>
+                :style="{float: btnPosition}"
+            >{{btnText}}</el-button>
         </div>
     </el-form>
 </template>
 
 <script>
 import { reactive } from 'vue';
+import MyEditor from './MyEditor.vue';
 export default {
     props:{
         formlist:{
             type: Array,
             default: []
         },
-        params:Object
+        params:Object,
+        btnText:{
+            type:String,
+            default:'登录'
+        },
+        btnPosition:{
+            type:String,
+            default:'center'
+        }
     },
     setup(props, { emit }){
         const myParams = reactive({})
@@ -41,6 +61,9 @@ export default {
             myParams,
             submitForm
         }
+    },
+    components:{
+        MyEditor
     }
 }
 </script>

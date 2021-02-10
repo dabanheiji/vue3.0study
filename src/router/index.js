@@ -14,7 +14,7 @@ router.beforeEach((to, from ,next)=>{
         if(token){
             next();
         }else{
-            next('/login');
+            next(`/login?redirect=${to.path}`);
         }
     }else{
         next();

@@ -1,9 +1,18 @@
 <template>
     <div class="diary-item">
         <div class="diary-item-body" @click="myClick">
-            <h1>标题</h1>
+            <h1 class="diary-title">
+                <a
+                    class="fl"
+                >{{ data.blog_title }}</a>
+                <p
+                    class="fr"
+                >{{ data.create_date }}</p>
+            </h1>
         </div>
-        
+        <el-divider
+            :style="{margin: 4}"
+        ></el-divider>
     </div>
 </template>
 
@@ -12,8 +21,9 @@ export default {
     props:['data'],
     setup(props, { emit }){
         const {data} = props;
+        
         const myClick = ()=>{
-            emit('myclick', data)
+            emit('myclick', data.blog_id)
         }
 
         return {
@@ -25,12 +35,23 @@ export default {
 
 <style lang="less" scoped>
     .diary-item{
-        display: inline-grid;
-        height: 100px;
+        // height: 100px;
         padding: 8px;
+        line-height: 48px;
         .diary-item-body{
             cursor: pointer;
-            background-color: #1fc512;
+            width: 100%;
+             overflow: hidden;
+            // background-color: #1890ff;
+            &:hover{
+                background-color: #f5f5f5;
+            }
+            .diary-title{
+                width: 100%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
         }
     }
 </style>

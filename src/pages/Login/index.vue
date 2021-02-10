@@ -15,13 +15,32 @@
 
 <script>
 import { reactive } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { ElMessage } from 'element-plus'
 import MyForm from '../../components/MyForm.vue';
-import { loginForm } from '../../utils/form'
+import { loginForm } from '../../utils/form';
+import { Login } from '../../api/user';
 export default {
     setup(){
+        const router = useRouter();
+        const route = useRoute();
         const formlist = reactive(loginForm);
         const submit = (params)=>{
-            console.log(params)
+            Login(params).then(res => {
+                if(res.code === 200){
+                    sessionStorage.setItem('token', res.token);
+                    let redirect = route.query.redirect;
+                    if(redirect){
+                        router.replace(redirect);
+                    }else{
+                        router.replace('/');
+                    }
+                }else{
+                    ElMessage.error({
+                        message: res.message
+                    })
+                }
+            })
         }
 
         return {

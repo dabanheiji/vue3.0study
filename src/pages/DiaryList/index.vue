@@ -3,8 +3,8 @@
         <h1>大阪黑鸡的文章</h1>
         <div class="list">
             <diary-item
-                v-for="item in 10"
-                :key="item"
+                v-for="(item,index) in diaryList"
+                :key="index"
                 :data="item"
                 @myclick="goPage"
             />
@@ -13,17 +13,31 @@
 </template>
 
 <script>
+import { reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import DiaryItem from '../../components/DiaryItem.vue'
+import DiaryItem from '../../components/DiaryItem.vue';
+import { getBlogs } from '/@/api/blogs'
 export default {
     setup(){
         const router = useRouter();
+        onMounted(() => {
+            getDiaryList();
+        })
+
+        const diaryList = reactive([]);
+        const getDiaryList = ()=>{
+            getBlogs().then(res => {
+                diaryList.push(...res.data);
+            })
+        }
+
         const goPage = (id) => {
             router.push(`/detail/${id}`)
         }
 
         return {
-            goPage
+            goPage,
+            diaryList
         }
     },
     components:{
@@ -38,8 +52,8 @@ export default {
         padding: 16px;
         text-align: center;
         .list{
-            display: grid;
-            grid-template-columns: 25% 25% 25% 25%;
+            // display: grid;
+            // grid-template-columns: 25% 25% 25% 25%;
         }
     }
 </style>
